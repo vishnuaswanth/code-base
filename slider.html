@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Priority Slider</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+        }
+
+        .demo-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .vertical-slider-wrapper {
+            position: relative;
+            height: 100px;
+            width: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Custom vertical slider */
+        .vertical-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(to right, 
+                #ef4444 0%, 
+                #f59e0b 50%, 
+                #10b981 100%);
+            outline: none;
+            border-radius: 10px;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            cursor: pointer;
+        }
+
+        /* Slider thumb - Chrome, Safari, Edge */
+        .vertical-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .vertical-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Slider thumb - Firefox */
+        .vertical-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .vertical-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Labels */
+        .slider-labels {
+            position: absolute;
+            top: 50%;
+            left: -45px;
+            transform: translateY(-50%);
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .label-item {
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .label-item.active {
+            color: #111827;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .label-high.active {
+            color: #10b981;
+        }
+
+        .label-medium.active {
+            color: #f59e0b;
+        }
+
+        .label-low.active {
+            color: #ef4444;
+        }
+
+        /* Display value */
+        .value-display {
+            display: flex;
+            align-items: center;
+        }
+
+        .value-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .value-badge.high {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .value-badge.medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .value-badge.low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Tick marks */
+        .tick-marks {
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tick {
+            width: 8px;
+            height: 2px;
+            background: #d1d5db;
+            border-radius: 1px;
+        }
+
+        h2 {
+            margin: 0 0 30px 0;
+            color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h2>Priority Selector</h2>
+        
+        <div class="slider-container">
+            <div class="vertical-slider-wrapper">
+                <div class="slider-labels">
+                    <span class="label-item label-high active" data-value="2">High</span>
+                    <span class="label-item label-medium" data-value="1">Medium</span>
+                    <span class="label-item label-low" data-value="0">Low</span>
+                </div>
+                
+                <input 
+                    type="range" 
+                    min="0" 
+                    max="2" 
+                    value="2" 
+                    step="1" 
+                    class="vertical-slider" 
+                    id="prioritySlider"
+                >
+                
+                <div class="tick-marks">
+                    <div class="tick"></div>
+                    <div class="tick"></div>
+                    <div class="tick"></div>
+                </div>
+            </div>
+
+            <div class="value-display">
+                <span class="value-badge high" id="valueDisplay">High</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('prioritySlider');
+        const valueDisplay = document.getElementById('valueDisplay');
+        const labels = document.querySelectorAll('.label-item');
+
+        const priorities = ['Low', 'Medium', 'High'];
+        const priorityClasses = ['low', 'medium', 'high'];
+
+        function updateDisplay(value) {
+            const index = parseInt(value);
+            
+            // Update badge
+            valueDisplay.textContent = priorities[index];
+            valueDisplay.className = 'value-badge ' + priorityClasses[index];
+            
+            // Update labels
+            labels.forEach(label => {
+                label.classList.remove('active');
+                if (parseInt(label.dataset.value) === index) {
+                    label.classList.add('active');
+                }
+            });
+        }
+
+        slider.addEventListener('input', function() {
+            updateDisplay(this.value);
+        });
+
+        // Initialize
+        updateDisplay(slider.value);
+    </script>
+</body>
+</html>
